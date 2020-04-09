@@ -26,7 +26,7 @@ namespace TodoApi.Controllers
 		/// <summary>
 		/// Returns all tasks
 		/// </summary>
-		/// <returns>List of Todos</returns List of <see cref="Todo.Core.Models.ToDo"/>>
+		/// <returns>List of ToDos <see cref="Todo.Core.Models.ToDo" /> </returns>
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
