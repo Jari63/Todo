@@ -47,23 +47,25 @@ namespace Todo.Services
 		/// </summary>
 		public async Task Add(ToDo todo)
 		{
-			//_db.Add(todo);
-			await _db.ToDos.AddAsync(todo);
+			_db.ToDos.Add(todo);
 			await _db.SaveChangesAsync();
 		}
 
-		public async Task Delete(int id)
+		public Task Delete(int id)
 		{
 			ToDo todo = _db.ToDos.FirstOrDefault(t => t.Id == id);
 			_db.Remove(todo);
-			await _db.SaveChangesAsync();
+			_db.SaveChanges();
+			return Task.CompletedTask;
+
 		}
 
-		public async Task ToggleCompleted(int id)
+		public Task ToggleCompleted(int id)
 		{
 			ToDo todo = _db.ToDos.FirstOrDefault(t => t.Id == id);
 			todo.IsCompleted = !todo.IsCompleted;
-			await _db.SaveChangesAsync();
+			_db.SaveChanges();
+			return Task.CompletedTask;
 		}
 	}
 }

@@ -28,10 +28,10 @@ namespace TodoApi.Controllers
 		/// </summary>
 		/// <returns>List of Todos</returns List of <see cref="Todo.Core.Models.ToDo"/>>
 		[HttpGet]
-		public async Task<IEnumerable<ToDo>> Get()
+		public async Task<IActionResult> Get()
 		{
 			List<ToDo> todos = await _todoService.GetAll();
-			return Ok(todos).Value as IEnumerable<ToDo>;
+			return Ok(todos) as ActionResult;
 		}
 
 		// GET: api/Todo/5
@@ -41,7 +41,7 @@ namespace TodoApi.Controllers
 		/// <param name="id">Id of the task</param>
 		/// <returns></returns>
 		[HttpGet("{id}", Name = "Get")]
-		public ActionResult<ToDo> GetById(int id)
+		public IActionResult GetById(int id)
 		{
 			var todo = _todoService.GetById(id);
 			if (todo == null)
@@ -57,10 +57,10 @@ namespace TodoApi.Controllers
 		/// </summary>
 		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
 		[HttpPost]
-		public ActionResult Post([FromBody] ToDo todo)
+		public IActionResult Post([FromBody] ToDo todo)
 		{
 			_todoService.Add(todo);
-			return RedirectToAction(nameof(Get));
+			return Ok(todo);
 		}
 
 		/// <summary>
@@ -70,10 +70,10 @@ namespace TodoApi.Controllers
 		/// <param name="id">Id of the task</param>
 		/// <returns></returns>
 		[HttpPut("{id}")]
-		public ActionResult Put(int id)
+		public async Task<IActionResult> Put(int id)
 		{
-			_todoService.ToggleCompleted(id);
-			return RedirectToAction(nameof(Get));
+			await _todoService.ToggleCompleted(id);
+			return Ok();
 		}
 
 		/// <summary>
@@ -82,10 +82,10 @@ namespace TodoApi.Controllers
 		/// </summary>
 		/// <param name="id">Id of the task</param>
 		[HttpDelete("{id}")]
-		public ActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			_todoService.Delete(id);
-			return RedirectToAction(nameof(Get));
+			await _todoService.Delete(id);
+			return Ok();
 		}
 	}
 }

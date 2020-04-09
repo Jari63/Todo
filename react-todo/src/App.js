@@ -17,8 +17,12 @@ class App extends Component {
 
   // add new task
   addTodo = (description) => {
+    let data = {
+      description,
+      isCompleted: false,
+    };
     axios
-      .post(this.url, { description, isCompleted: false })
+      .post(this.url, data)
       .then((res) =>
         this.setState(this.setState({ todos: [...this.state.todos, res.data] }))
       );
@@ -26,7 +30,6 @@ class App extends Component {
 
   // Toggle Complete
   markComplete = (id) => {
-    console.log(id);
     axios.put(`${this.url}/${id}`).then((res) =>
       this.setState({
         todos: this.state.todos.map((todo) => {

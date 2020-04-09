@@ -11,10 +11,5 @@ namespace Todo.Data
 		}
 
 		public DbSet<ToDo> ToDos { get; set; }
-
-		public override void Dispose()
-		{
-			base.Dispose();
-		}
 	}
 }
