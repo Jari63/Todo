@@ -3,6 +3,30 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#*******vs code *********
+# dependencies
+react-todo/node_modules
+react-todo/.pnp
+react-todo.pnp.js
+
+# testing
+react-todo/coverage
+
+# production
+react-todo/build
+
+# misc
+react-todo/.DS_Store
+react-todo/.env.local
+react-todo/.env.development.local
+react-todo/.env.test.local
+react-todo/.env.production.local
+
+react-todo/npm-debug.log*
+react-todo/yarn-debug.log*
+react-todo/yarn-error.log*
+#********* vs code ***********
+
 # User-specific files
 *.rsuser
 *.suo
