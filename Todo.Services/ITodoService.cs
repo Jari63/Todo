@@ -25,22 +25,22 @@ namespace Todo.Services
 		/// <summary>
 		/// Add new task
 		/// </summary>
-		/// <param name="todo"></param>
+		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
 		/// <returns></returns>
 		Task Add(ToDo todo);
 
 		/// <summary>
 		/// Delete task
 		/// </summary>
-		/// <param name="id">Id of the task</param>
+		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
 		/// <returns></returns>
-		Task Delete(int id);
+		Task Delete(ToDo todo);
 
 		/// <summary>
 		/// Toggle task completed
 		/// </summary>
-		/// <param name="id">If of the task</param>
+		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
 		/// <returns></returns>
-		Task ToggleCompleted(int id);
+		Task ToggleCompleted(ToDo todo);
 	}
 }

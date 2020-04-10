@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace TodoApi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	//[Microsoft.AspNetCore.Cors.EnableCors]
+	//[EnableCors("MyAllowSpecificOrigins")]
 	public class TodoController : ControllerBase
 	{
 		private readonly ITodoService _todoService;
@@ -41,12 +42,12 @@ namespace TodoApi.Controllers
 		/// <param name="id">Id of the task</param>
 		/// <returns></returns>
 		[HttpGet("{id}", Name = "Get")]
-		public IActionResult GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
-			var todo = _todoService.GetById(id);
+			var todo = await _todoService.GetById(id);
 			if (todo == null)
 			{
-				return NotFound(todo);
+				return NotFound();
 			}
 			return Ok(todo);
 		}
@@ -57,9 +58,9 @@ namespace TodoApi.Controllers
 		/// </summary>
 		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
 		[HttpPost]
-		public IActionResult Post([FromBody] ToDo todo)
+		public async Task<IActionResult> Post([FromBody] ToDo todo)
 		{
-			_todoService.Add(todo);
+			await _todoService.Add(todo);
 			return Ok(todo);
 		}
 
@@ -72,8 +73,13 @@ namespace TodoApi.Controllers
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Put(int id)
 		{
-			await _todoService.ToggleCompleted(id);
-			return Ok();
+			var todo = _todoService.GetById(id);
+			if (todo == null)
+			{
+				return NotFound();
+			}
+			await _todoService.ToggleCompleted(todo.Result);
+			return NoContent();
 		}
 
 		/// <summary>
@@ -84,8 +90,13 @@ namespace TodoApi.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			await _todoService.Delete(id);
-			return Ok();
+			var todo = _todoService.GetById(id);
+			if (todo == null)
+			{
+				return NotFound();
+			}
+			await _todoService.Delete(todo.Result);
+			return NoContent();
 		}
 	}
 }

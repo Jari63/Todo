@@ -20,7 +20,7 @@ namespace TodoApi
 {
 	public class Startup
 	{
-		readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+		readonly string MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -33,21 +33,21 @@ namespace TodoApi
 		{
 			services.AddControllers();
 
-			AddSwaggerDocs(services);
-
-			services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-			services.AddTransient<ITodoService, TodoService>();
-
 			services.AddCors(options =>
 			{
 				options.AddPolicy(MyAllowSpecificOrigins,
 				builder =>
 				{
-					builder.WithOrigins("*");
-					builder.WithHeaders("Origin,Accept, X-Requested-With, Referer, Content-Type, Sec-Fetch-Dest, User-Agent, Access-Control-Request-Method, Access-Control-Request-Headers");
-					builder.WithMethods("GET,HEAD,OPTIONS,POST,PUT");
+					builder.WithOrigins("http://localhost:3000");
+					builder.WithHeaders("Access-Control-Allow-Origin, Content-Type", "content-type", "Access-Control-Allow-Headers");
+					builder.WithMethods("GET, POST, PUT, DELETE, OPTIONS");
 				});
 			});
+
+			AddSwaggerDocs(services);
+
+			services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+			services.AddTransient<ITodoService, TodoService>();
 		}
 
 		private void AddSwaggerDocs(IServiceCollection services)
@@ -89,6 +89,7 @@ namespace TodoApi
 				app.UseDeveloperExceptionPage();
 			}
 
+			#region Swagger
 			// Enable middleware to serve generated Swagger as a JSON endpoint.
 			app.UseSwagger();
 
@@ -100,16 +101,18 @@ namespace TodoApi
 				// to show Swagger UI at the app's root
 				c.RoutePrefix = string.Empty;
 			});
+			#endregion
+
+			app.UseRouting();
 
 			app.UseCors(builder =>
 			{
-				builder.AllowAnyOrigin();
-				//builder.WithOrigins(MyAllowSpecificOrigins);
+				//builder.AllowAnyOrigin();
+				builder.WithOrigins(MyAllowSpecificOrigins);
 				builder.AllowAnyHeader();
 				builder.AllowAnyMethod();
 			});
 
-			app.UseRouting();
 
 			app.UseAuthorization();
 

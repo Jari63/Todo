@@ -24,7 +24,7 @@ namespace Todo.Services
 		public Task<List<ToDo>> GetAll()
 		{
 			List<ToDo> todos = new List<ToDo>();
-			foreach (var todo in _db.ToDos)
+			foreach (var todo in _db.ToDos.AsNoTracking())
 			{
 				todos.Add(todo);
 			}
@@ -36,33 +36,41 @@ namespace Todo.Services
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public async Task<ToDo> GetById(int id)
+		public Task<ToDo> GetById(int id)
 		{
-			var todo = await _db.ToDos.FirstOrDefaultAsync(t => t.Id == id);
+			Task<ToDo> todo = _db.ToDos.FirstOrDefaultAsync(t => t.Id == id);
 			return todo;
 		}
 
 		/// <summary>
 		/// Add new task
 		/// </summary>
-		public async Task Add(ToDo todo)
+		public Task Add(ToDo todo)
 		{
 			_db.ToDos.Add(todo);
-			await _db.SaveChangesAsync();
+			_db.SaveChanges();
+			return Task.CompletedTask;
 		}
 
-		public Task Delete(int id)
+		/// <summary>
+		/// Deletes task
+		/// </summary>
+		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
+		/// <returns></returns>
+		public Task Delete(ToDo todo)
 		{
-			ToDo todo = _db.ToDos.FirstOrDefault(t => t.Id == id);
 			_db.Remove(todo);
 			_db.SaveChanges();
 			return Task.CompletedTask;
-
 		}
 
-		public Task ToggleCompleted(int id)
+		/// <summary>
+		/// Toggles IsCompleted-status
+		/// </summary>
+		/// <param name="todo"><see cref="Todo.Core.Models.ToDo"/></param>
+		/// <returns></returns>
+		public Task ToggleCompleted(ToDo todo)
 		{
-			ToDo todo = _db.ToDos.FirstOrDefault(t => t.Id == id);
 			todo.IsCompleted = !todo.IsCompleted;
 			_db.SaveChanges();
 			return Task.CompletedTask;
