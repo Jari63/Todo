@@ -86,7 +86,12 @@ namespace TodoApi
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				//app.UseDeveloperExceptionPage();
+				app.UseExceptionHandler("/error-local-development");
+			}
+			else
+			{
+				app.UseExceptionHandler("/error");
 			}
 
 			#region Swagger
