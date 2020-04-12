@@ -32,7 +32,7 @@ namespace TodoApi.Controllers
 		public async Task<IActionResult> Get()
 		{
 			List<ToDo> todos = await _todoService.GetAll();
-			return Ok(todos) as ActionResult;
+			return Ok(todos);
 		}
 
 		// GET: api/Todo/5
@@ -44,6 +44,11 @@ namespace TodoApi.Controllers
 		[HttpGet("{id}", Name = "Get")]
 		public async Task<IActionResult> GetById(int id)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
 			var todo = await _todoService.GetById(id);
 			if (todo == null)
 			{
@@ -60,8 +65,12 @@ namespace TodoApi.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] ToDo todo)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 			await _todoService.Add(todo);
-			return Ok(todo);
+			return CreatedAtAction(nameof(Get), todo);
 		}
 
 		/// <summary>
@@ -73,6 +82,11 @@ namespace TodoApi.Controllers
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Put(int id)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
 			var todo = _todoService.GetById(id);
 			if (todo == null)
 			{
@@ -90,6 +104,11 @@ namespace TodoApi.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(int id)
 		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
 			var todo = _todoService.GetById(id);
 			if (todo == null)
 			{
