@@ -7,7 +7,7 @@ trigger:
 - master
 
 variables:
-  uiSource: '/src'
+  uiSource: 'react-todo/src'
   uiBuild: '$(uiSource)/build'
 
 pool:
