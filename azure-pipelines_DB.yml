@@ -32,6 +32,6 @@ steps:
 
 - script: |
     dotnet tool install --global dotnet-ef
-    dotnet ef migrations script --output '$(Build.ArtifactStagingDirectory)'\SQL\$scriptName --context '$dbContext'  --idempotent --project Todo.Data\Todo.Data.csproj
+    dotnet ef migrations script --output '$(Build.ArtifactStagingDirectory)'\SQL\$scriptName --context '$(dbContext)'  --idempotent --project Todo.Data\Todo.Data.csproj
   displayName: 'DB Script'
 
