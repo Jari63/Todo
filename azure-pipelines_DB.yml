@@ -17,11 +17,11 @@ variables:
   dbContext: 'TodoContext'
 
 steps:
-- task: NuGetToolInstaller@1
+# - task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+# - task: NuGetCommand@2
+#   inputs:
+#     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
   inputs:
@@ -32,5 +32,5 @@ steps:
 
 - script: |
     dotnet ef migrations script --output '$(Build.ArtifactStagingDirectory)'\SQL\$scriptName --context $dbContext  --idempotent 
-  displayName: 'npm install and build'
+  displayName: 'DB Script'
 
