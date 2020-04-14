@@ -8,7 +8,7 @@ trigger:
 
 variables:
   uiSource: 'react-todo/src'
-  uiBuild: '$(uiSource)/build'
+  uiBuild: 'react-todo/build'
 
 pool:
   vmImage: 'ubuntu-latest'
