@@ -13,6 +13,8 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  scriptName: 'DBScript'
+  dbContext: 'TodoContext'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -29,5 +31,6 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - script: |
-    dotnet ef migrations script --output $stagingDir\SQL\$scriptName --context $dbContext  --idempotent 
+    dotnet ef migrations script --output '$(Build.ArtifactStagingDirectory)'\SQL\$scriptName --context $dbContext  --idempotent 
   displayName: 'npm install and build'
+
