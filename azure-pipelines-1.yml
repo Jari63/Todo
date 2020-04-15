@@ -7,11 +7,11 @@ trigger:
 - master
 
 variables:
-  uiSource: 'react-todo/src'
-  uiBuild: 'react-todo/build'
+  uiSource: 'react-todo\src'
+  uiBuild: 'react-todo\build'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 steps:
 - task: NodeTool@0
