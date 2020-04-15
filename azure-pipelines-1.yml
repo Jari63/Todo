@@ -24,10 +24,13 @@ steps:
     npm install
     npm run build
     popd
+  displayName: 'npm install and build'
+
+- script: |
     dir
     cd react-todo
     dir
-  displayName: 'npm install and build'
+  displayName: 'Dir'
 
 - task: ArchiveFiles@2
   inputs:
