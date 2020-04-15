@@ -37,7 +37,7 @@ namespace TodoApi
 				options.AddPolicy(MyAllowSpecificOrigins,
 				builder =>
 				{
-					builder.WithOrigins("http://localhost:3000");
+					builder.WithOrigins("http://localhost:3000", "https://todo2021.azurewebsites.net");
 					builder.WithHeaders("Access-Control-Allow-Origin, Content-Type", "content-type", "Access-Control-Allow-Headers");
 					builder.WithMethods("GET, POST, PUT, DELETE, OPTIONS");
 				});

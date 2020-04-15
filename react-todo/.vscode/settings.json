@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/5af2c87b-1dfc-4002-835c-b5a16ec88c2f/resourceGroups/PluralSight/providers/Microsoft.Web/sites/Todo2021",
+    "appService.deploySubpath": "build"
+}
