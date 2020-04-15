@@ -19,20 +19,33 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    pushd $(uiSource)
-    npm install
-    # npm run build
-    popd
-  displayName: 'npm install and build'
+# - script: |
+#     pushd $(uiSource)
+#     npm install
+#     # npm run build
+#     popd
+#   displayName: 'npm install and build'
 
-- script: |
-    pushd $(uiSource)
-    # npm install
-    npm run build
-    popd
-  displayName: 'npm install and build'
+# - script: |
+#     pushd $(uiSource)
+#     # npm install
+#     npm run build
+#     popd
+#   displayName: 'npm install and build'
 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '$(uiSource)'
+  displayName: 'npm install'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(uiSource)'
+    customCommand: 'run build'
+  displayName: 'npm run build'
+  
 - script: |
     dir
     cd react-todo
