@@ -22,8 +22,11 @@ steps:
 - script: |
     pushd $(uiSource)
     npm install
-    npm run-script build
+    npm run build
     popd
+    dir
+    cd react-todo
+    dir
   displayName: 'npm install and build'
 
 - task: ArchiveFiles@2
