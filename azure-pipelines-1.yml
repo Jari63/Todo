@@ -2,6 +2,7 @@
 # Build a Node.js project that uses React.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+#
 
 trigger:
 - master
@@ -19,12 +20,18 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    pushd $(uiSource)
-    npm install
-    npm run-script build
-    popd
-  displayName: 'npm install and build'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '$(uiSource)'
+  displayName: 'npm install'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(uiSource)'
+    customCommand: 'run build'
+  displayName: 'npm run build'
 
 - task: ArchiveFiles@2
   inputs:
