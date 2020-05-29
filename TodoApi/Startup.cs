@@ -46,7 +46,7 @@ namespace TodoApi
 			AddSwaggerDocs(services);
 
 			services.AddDataAccessServices(Configuration.GetConnectionString("Default"));
-			services.AddTransient<ITodoService, TodoService>();
+			services.AddScoped<ITodoService, TodoService>();
 		}
 
 		private void AddSwaggerDocs(IServiceCollection services)

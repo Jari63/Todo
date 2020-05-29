@@ -11,7 +11,7 @@ using Xunit;
 
 namespace TodoTests
 {
-	public class TodoControllerTests
+	public class ControllerTests
 	{
 		[Fact]
 		public async Task TodoGet_ReturnsAnOkObjectResult_WithAListOfToDos()

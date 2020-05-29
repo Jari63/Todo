@@ -29,11 +29,7 @@ namespace TodoApi.Controllers
 		/// </summary>
 		/// <returns>List of ToDos <see cref="Todo.Core.Models.ToDo" /> </returns>
 		[HttpGet]
-		public async Task<IActionResult> Get()
-		{
-			List<ToDo> todos = await _todoService.GetAll();
-			return Ok(todos);
-		}
+		public async Task<IActionResult> Get() => Ok(await _todoService.GetAll());
 
 		// GET: api/Todo/5
 		/// <summary>
